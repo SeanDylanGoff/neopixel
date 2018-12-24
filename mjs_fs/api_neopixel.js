@@ -24,6 +24,7 @@ let NeoPixel = {
       _i: NeoPixel._c(pin, numPixels, order),
 
       setPixel: NeoPixel.setPixel,
+      setPixelHSV: NeoPixel.setPixelHSV,
       clear: NeoPixel.clear,
       show: NeoPixel.show,
     });
@@ -40,7 +41,7 @@ let NeoPixel = {
   // Set i-th's pixel's HSV value.
   // Note that this only affects in-memory value of the pixel.
   setPixelHSV: function(i, h, s, v) {
-    NeoPixel._set_hsv(this._i, i, r, g, b);
+    NeoPixel._set_hsv(this._i, i, h, s, v);
   },
 
   // ## **`strip.clear()`**
