@@ -49,6 +49,48 @@ struct mgos_neopixel *mgos_neopixel_create(int pin, int num_pixels,
   return np;
 }
 
+void mgos_neopixel_set_hsv(struct mgos_neopixel *np, int i, int h, int s, int v) {
+  unsigned char region, remainder, p, q, t, r, g, b;
+
+  if (s == 0){
+      r = v;
+      g = v;
+      b = v;
+  }else{
+
+    region = h / 43;
+    remainder = (h - (region * 43)) * 6; 
+
+    p = (v * (255 - s)) >> 8;
+    q = (v * (255 - ((s * remainder) >> 8))) >> 8;
+    t = (v * (255 - ((s * (255 - remainder)) >> 8))) >> 8;
+
+    switch (region)
+    {
+        case 0:
+            r = v; g = t; b = p;
+            break;
+        case 1:
+            r = q; g = v; b = p;
+            break;
+        case 2:
+            r = p; g = v; b = t;
+            break;
+        case 3:
+            r = p; g = q; b = v;
+            break;
+        case 4:
+            r = t; g = p; b = v;
+            break;
+        default:
+            r = v; g = p; b = q;
+            break;
+    }
+  }
+  mgos_neopixel_set(np, i, r, g, b);
+}
+
+
 void mgos_neopixel_set(struct mgos_neopixel *np, int i, int r, int g, int b) {
   uint8_t *p = np->data + i * NUM_CHANNELS;
   switch (np->order) {

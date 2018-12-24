@@ -36,6 +36,13 @@ let NeoPixel = {
     NeoPixel._set(this._i, i, r, g, b);
   },
 
+  // ## **`strip.setPixelHSV(i, h, s, v)`**
+  // Set i-th's pixel's HSV value.
+  // Note that this only affects in-memory value of the pixel.
+  setPixelHSV: function(i, h, s, v) {
+    NeoPixel._set_hsv(this._i, i, r, g, b);
+  },
+
   // ## **`strip.clear()`**
   // Clear in-memory values of the pixels.
   clear: function() {
@@ -50,6 +57,7 @@ let NeoPixel = {
 
   _c: ffi('void *mgos_neopixel_create(int, int, int)'),
   _set: ffi('void mgos_neopixel_set(void *, int, int, int, int)'),
+  _set_hsv: ffi('void mgos_neopixel_set_hsv(void *, int, int, int, int)'),
   _clear: ffi('void mgos_neopixel_clear(void *)'),
   _show: ffi('void mgos_neopixel_show(void *)'),
 };
